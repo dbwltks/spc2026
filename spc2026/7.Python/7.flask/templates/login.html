@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>나의 홈페이지</title>
+  </head>
+  <body>
+    <h1>사용자 프로필</h1>
+    <ul>
+      <li>사용자 이름 :{{ username }}</li>
+      <li>사용자 비밀번호 :{{ password }}</li>
+    </ul>
+    <h2>프로필 사진 업로드</h2>
+    <form action="/upload" method="post">
+      <input type="file" name="profile_photo" />
+      <button type="submit">업로드</button>
+    </form>
+  </body>
+</html>

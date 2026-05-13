@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>당신의 화면 정보는 다음과 같습니다.</h1>
+    <div id="screenInfo"></div>
+    <script>
+      function updateWindowInfo() {
+        const innerWidth = window.innerWidth;
+        const innerHeight = window.innerHeight;
+
+        const outerWidth = window.outerWidth;
+        const outerHeight = window.outerHeight;
+
+        const screenWidth = screen.width;
+        const screenHeight = screen.height;
+
+        const screenInfo = document.getElementById("screenInfo");
+        screenInfo.innerHTML = `
+          <p>화면 너비: ${innerWidth}px</p>
+          <p>화면 높이: ${innerHeight}px</p>
+          <p>창 너비: ${outerWidth}px</p>
+          <p>창 높이: ${outerHeight}px</p>
+          <p>화면 너비: ${screenWidth}px</p>
+          <p>화면 높이: ${screenHeight}px</p>
+        `;
+      }
+      window.addEventListener("load", () => {
+        updateWindowInfo();
+      });
+      window.addEventListener("resize", updateWindowInfo);
+    </script>
+  </body>
+</html>

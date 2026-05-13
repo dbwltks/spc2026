@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Guess the Number</h1>
+    <h2>1~100 사이의 숫자를 맞춰보세요</h2>
+    <input type="number" id="guessInput" placeholder="Enter your guess" />
+    <button onclick="checkGuess()">Check Guess</button>
+    <p id="result">Try guessing a number</p>
+    <p id="attempts">Attempts: <span id="attemptsCount"></span>0</span></p>
+    <div>
+      <ol id="history">
+        <li id="historyItem">history</li>
+      </ol>
+    </div>
+    <script>
+      let history = [];
+      let randomNumber = Math.floor(Math.random() * 100) + 1;
+      let attempts = 0;
+      function checkGuess() {
+        attempts++;
+        document.getElementById("attemptsCount").textContent = attempts + " / 1";
+        let guess = parseInt(document.getElementById("guessInput").value);
+        history.push(guess);
+        document.getElementById("history").innerHTML = history
+          .map((item) => `<li>${item}</li>`)
+          .join("");
+        if (guess === randomNumber) {
+          document.getElementById("result").innerHTML = "You guessed it right!";
+          document.getElementById("guessInput").disabled = true;
+          document.getElementById("checkGuess").disabled = true;
+        } else if (guess < randomNumber) {
+          document.getElementById("result").innerHTML = "Too low, try again!";
+          document.getElementById("guessInput").value = "";
+        } else {
+          document.getElementById("result").innerHTML = "Too high, try again!";
+          document.getElementById("guessInput").value = "";
+        }
+        if (attempts >= 10) {
+          document.getElementById("result").innerHTML =
+            "You lost! The number was " + randomNumber;
+          document.getElementById("guessInput").disabled = true;
+          document.getElementById("checkGuess").disabled = true;
+        }
+      }
+    </script>
+  </body>
+</html>

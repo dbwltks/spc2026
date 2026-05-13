@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+      }
+      .slider-container {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+      }
+      .slider-container img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>이미지 슬라이저</h1>
+    <div class="slider-container">
+      <img src="/images/dog1.jpg" alt="이미지 1" />
+      <img src="/images/dog2.jpg" alt="이미지 2" />
+      <img src="/images/dog3.jpg" alt="이미지 3" />
+    </div>
+    <button id="prevButton">이전</button>
+    <button id="nextButton">다음</button>
+
+    <script>
+      const images = document.querySelectorAll(".slider-container img");
+      let currentIndex = 0;
+
+      // 초기 위치 세팅: 0번은 가운데, 나머지는 오른쪽에 대기
+      images.forEach((img, i) => {
+        img.style.transform = i === 0 ? "translateX(0)" : "translateX(100%)";
+      });
+
+      function slide(direction) {
+        // direction: 1 = 다음(왼쪽으로 밀려남), -1 = 이전(오른쪽으로 밀려남)
+        const nextIndex =
+          (currentIndex + direction + images.length) % images.length;
+
+        const current = images[currentIndex];
+        const next = images[nextIndex];
+
+        // 들어올 이미지를 반대편에 미리 위치시킴 (트랜지션 없이)
+        next.style.transition = "none";
+        next.style.transform = `translateX(${direction * 100}%)`;
+
+        // 브라우저가 위치 변경을 적용할 시간을 줌
+        requestAnimationFrame(() => {
+          next.style.transition = "transform 0.5s ease-in-out";
+          // 현재 이미지는 반대 방향으로 빠지고, 다음 이미지는 가운데로
+          current.style.transform = `translateX(${-direction * 100}%)`;
+          next.style.transform = "translateX(0)";
+        });
+
+        currentIndex = nextIndex;
+      }
+
+      document
+        .getElementById("nextButton")
+        .addEventListener("click", () => slide(1));
+      document
+        .getElementById("prevButton")
+        .addEventListener("click", () => slide(-1));
+    </script>
+  </body>
+</html>

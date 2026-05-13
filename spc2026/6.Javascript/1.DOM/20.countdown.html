@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Countdown Timer</h1>
+    <input type="number" id="timeInput" placeholder="Enter time in seconds" />
+    <button onclick="startTimer()">Start Timer</button>
+    <div>
+      <p id="timerDisplay">00:00:00</p>
+    </div>
+    <script>
+      function startTimer() {
+        // 1. 입력값 가져오기
+        // 2. setInterval 사용하여 1초마다 카운트 다운
+        // 3. timerDisplay에 표시
+        // 4. 시간이 만료되면 타이머 중지
+        // 5. 타이머 중지 후 초기화
+        // 6. 00:00:00 형식으로 표시
+        const timeInput = document.getElementById("timeInput");
+        const timerDisplay = document.getElementById("timerDisplay");
+        let time = parseInt(timeInput.value);
+        let interval = setInterval(() => {
+          time--;
+          let hours = Math.floor(time / 3600);
+          let minutes = Math.floor((time % 3600) / 60);
+          let seconds = time % 60;
+          timerDisplay.innerHTML = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+          if (time === 0) {
+            clearInterval(interval);
+            timerDisplay.innerHTML = `00:00:00`;
+            resetTimer();
+          }
+        }, 1000);
+      }
+      function resetTimer() {
+        clearInterval(interval);
+        timerDisplay.innerHTML = "00:00:00";
+        timeInput.value = "";
+      }
+    </script>
+  </body>
+</html>

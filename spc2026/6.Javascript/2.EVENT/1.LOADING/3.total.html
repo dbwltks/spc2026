@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      console.log("0. head tag script loaded");
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("0. document DOMContentLoaded");
+        const mytitle0 = document.getElementById("mytitle");
+        console.log("0번에서 시도 : ", mytitle0);
+      });
+    </script>
+  </head>
+  <body>
+    <script>
+      console.log("1. body tag script loaded");
+      const mytitle1 = document.getElementById("mytitle");
+      console.log("1번에서 시도 : ", mytitle1);
+    </script>
+    <h1 id="mytitle">Hello World</h1>
+    <script>
+      window.onload = function () {
+        console.log("4. window onload");
+        const mytitle2 = document.getElementById("mytitle");
+        console.log("4번에서 시도 : ", mytitle2);
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("3. document DOMContentLoaded");
+        const mytitle3 = document.getElementById("mytitle");
+        console.log("3번에서 시도 : ", mytitle3);
+      });
+    </script>
+    <script>
+      console.log("2. script tag loaded");
+      const mytitle4 = document.getElementById("mytitle");
+      console.log("2번에서 시도 : ", mytitle4);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>버튼 두개</h1>
+    <div>0</div>
+    <button onclick="increase()">+1</button>
+    <button onclick="decrease()">-1</button>
+    <script>
+      let count = 0;
+      function increase() {
+        count++;
+        document.querySelector("div").innerHTML = count;
+      }
+      function decrease() {
+        count--;
+        if (count < 0) {
+          count = 0;
+        }
+        document.querySelector("div").innerHTML = count;
+      }
+    </script>
+  </body>
+</html>

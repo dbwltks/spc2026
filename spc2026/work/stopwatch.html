@@ -1,0 +1,48 @@
+<!-- 1. Start 버튼에 이벤트를 추가해서. 00:00:00 있는 영역을 가져와서... 시간
+계산을 해서... setInterval( 10ms ) 마다 업데이트 한다.. 2. Stop 버튼에 이벤트를
+추가해서 이 타이머를 클리어한다. 3. Reset 버튼에 이벤트를 추가해서. 00:00:00
+으로 쓴다.. 4. UX개선 (디자인, 버튼 활성/비활성화) -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Stopwatch</h1>
+    <div>
+      <p id="time">00:00:00</p>
+    </div>
+    <button id="start" onclick="start()">Start</button>
+    <button id="stop" onclick="stop()">Stop</button>
+    <button id="reset" onclick="reset()">Reset</button>
+    <script>
+      let time = 0;
+      let interval;
+      function start() {
+        if (interval) {
+          return;
+        }
+        interval = setInterval(() => {
+          time++;
+          document.getElementById("time").innerHTML = `${Math.floor(time / 3600)
+            .toString()
+            .padStart(2, "0")}:${Math.floor((time % 3600) / 60)
+            .toString()
+            .padStart(2, "0")}:${(time % 60).toString().padStart(2, "0")}`;
+        }, 10);
+      }
+      function stop() {
+        clearInterval(interval);
+        interval = null;
+        document.getElementById("start").innerHTML = "Start";
+      }
+      function reset() {
+        time = 0;
+        document.getElementById("time").innerHTML = "00:00:00";
+        document.getElementById("start").innerHTML = "Start";
+      }
+    </script>
+  </body>
+</html>

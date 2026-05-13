@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>나의 헤딩</h1>
+    <p>여기는 나의 문장이 있는 곳</p>
+    <div id="output"><!-- 여기에 동적으로 컨텐츠를 출력할 곳 --></div>
+    <p>여기는 나의 두번째 문장이 있는 곳</p>
+    <button onclick="sayHello()">여기는 나의 버튼</button>
+    <script>
+      function sayHello() {
+        document.write("say hello!!");
+        const myoutput = document.getElementById("output");
+        console.log(myoutput);
+        myoutput.innerHTML = "say hello!!";
+      }
+    </script>
+  </body>
+</html>

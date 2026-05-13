@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>실시간 검색 필터</h1>
+    <input type="text" id="searchInput" placeholder="검색어를 입력하세요" />
+    <ul id="searchResults"></ul>
+    <style>
+      #searchResults {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <style>
+      #searchResults li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+    </style>
+    <style>
+      #searchResults li:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      const items = [
+        "apple",
+        "banana",
+        "cherry",
+        "date",
+        "elderberry",
+        "fig",
+        "grape",
+        "honeydew",
+        "kiwi",
+        "lemon",
+        "lime",
+        "mango",
+        "melon",
+        "nectarine",
+        "orange",
+        "papaya",
+        "peach",
+        "pear",
+        "pineapple",
+        "plum",
+        "pomegranate",
+        "raspberry",
+        "strawberry",
+        "watermelon",
+      ];
+      const searchInput = document.getElementById("searchInput");
+      const searchResults = document.getElementById("searchResults");
+      searchResults.innerHTML = items
+        .map((item) => `<li>${item.toLowerCase()}</li>`)
+        .join("");
+      searchInput.addEventListener("input", (event) => {
+        const searchTerm = event.target.value.toLowerCase();
+        const filteredItems = items
+          .filter((item) => item.toLowerCase().includes(searchTerm))
+          .map((item) => `<li>${item}</li>`)
+          .join("");
+        searchResults.innerHTML = filteredItems.length > 0 ? filteredItems : "";
+      });
+    </script>
+  </body>
+</html>

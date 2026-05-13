@@ -1,0 +1,49 @@
+<!-- 1. Start 버튼에 이벤트를 추가해서. 00:00:00 있는 영역을 가져와서... 시간
+계산을 해서... setInterval( 10ms ) 마다 업데이트 한다.. 2. Stop 버튼에 이벤트를
+추가해서 이 타이머를 클리어한다. 3. Reset 버튼에 이벤트를 추가해서. 00:00:00
+으로 쓴다.. 4. UX개선 (디자인, 버튼 활성/비활성화) -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Stopwatch</h1>
+    <div>
+      <p id="time">00:00.000</p>
+    </div>
+    <button id="start" onclick="startTimer()">Start</button>
+    <button id="stop" onclick="stopTimer()">Stop</button>
+    <button id="reset" onclick="resetTimer()">Reset</button>
+    <script>
+      // 1. DOM 요소 가져오기
+      const time = document.getElementById("time");
+      const start = document.getElementById("start");
+      const stop = document.getElementById("stop");
+      const reset = document.getElementById("reset");
+
+      let startTime;
+      let timerId;
+      let currentTime;
+      let elapsedTime;
+
+      function startTimer() {
+        startTime = new Date().getTime(); //시간을 담는 자료구조를 찾아보기
+        timerId = setInterval(updateTimer, 10); // 매 10ms 마다 실행
+      }
+
+      function updateTimer() {
+        currentTime = new Date().getTime(); //현재 시간을 가져오기
+        elapsedTime = currentTime - startTime; //경과시간을 계산
+
+        let minutes = Math.floor(elapsedTime / 60000);
+        let seconds = Math.floor((elapsedTime % 60000) / 1000);
+        let milliseconds = elapsedTime % 1000;
+
+        time.innerHTML = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
+      }
+    </script>
+  </body>
+</html>

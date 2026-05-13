@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .dropContainer {
+        width: 200px;
+        height: 200px;
+        border: 1px solid black;
+        margin: 10px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+      .placeholder {
+        width: 100%;
+        height: 100%;
+        border: 1px solid black;
+        margin: 10px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+      .dragitem {
+        width: 100%;
+        height: 100%;
+        border: 1px solid black;
+        margin: 10px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+      .dragitem:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+      }
+      .dragitem:active {
+        background-color: #e0e0e0;
+        cursor: pointer;
+      }
+      .dragitem:focus {
+        background-color: #d0d0d0;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="startZone" class="dropContainer">
+      <span id="startPlaceholder" class="placeholder"
+        >이것은 드래그 가능한 Span 요소 입니다.</span
+      >
+      <div id="dragitem" draggable="true">
+        이것은 드래그 가능한 Div 요소 입니다.
+      </div>
+    </div>
+    <script>
+      const dragitem = document.getElementById("dragitem");
+      const dropZone = document.getElementById("dropZone");
+      const startZone = document.getElementById("startZone");
+
+      [startZone, dropZone].forEach((zone) => {
+        zone.addEventListener("dragover", (ev) => {
+          ev.preventDefault();
+          console.log("위에 있음");
+        });
+      });
+
+      [startZone, dropZone].forEach((zone) => {
+        zone.addEventListener("drop", (ev) => {
+          ev.preventDefault();
+          console.log("드롭됨");
+        });
+      });
+    </script>
+  </body>
+</html>

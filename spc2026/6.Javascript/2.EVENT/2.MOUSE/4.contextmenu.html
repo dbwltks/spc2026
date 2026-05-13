@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="myButton">우클릭 하시오</div>
+    <script>
+      // 우클릭 금지하기
+      document.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+        alert("우클릭 금지");
+      });
+    </script>
+  </body>
+</html>

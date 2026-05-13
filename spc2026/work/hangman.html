@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>5 Word Hangman Game</h1>
+    <div class="word-display" id="wordDisplay">_ _ _ _ _</div>
+    <div class="info">
+      <span class="chances">남은 기회: <strong id="chances">6</strong></span>
+    </div>
+    <div class="used-letters">
+      사용한 글자: <span id="usedLetters">-</span>
+    </div>
+    <div class="message" id="message"></div>
+    <div class="input-group">
+      <input type="text" id="letterInput" maxlength="1" placeholder="a-z" autofocus>
+      <button onclick="guessLetter()">글자 맞추기</button>
+    </div>
+    <button class="new-game" onclick="newGame()">새 게임</button>
+    <p class="hint">알파벳 한 글자씩 맞춰보세요!</p>
+  </div>
+
+<script>
+  const words = [
+    'light', 'cloud', 'piano', 'bread', 'happy', 'dream', 'flame', 'green',
+    'house', 'music', 'ocean', 'paint', 'quiet', 'river', 'smile', 'tiger',
+    'water', 'beach', 'storm', 'sweet', 'brave', 'glass', 'heart', 'magic',
+    'peach', 'queen', 'sword', 'truth', 'voice', 'world', 'youth', 'zebra',
+    'apple', 'bench', 'chair', 'dance', 'eagle', 'fairy', 'grape', 'honey'
+  ];
+
+  let currentWord = '';
+  let guessedLetters = [];
+  let wrongGuesses = 0;
+  const maxWrong = 6;
+  let gameOver = false;
+
+  function newGame() {
+    currentWord = words[Math.floor(Math.random() * words.length)];
+    guessedLetters = [];
+    wrongGuesses = 0;
+    gameOver = false;
+    document.getElementById('message').className = 'message';
+    document.getElementById('message').textContent = '';
+    document.getElementById('letterInput').value = '';
+    document.getElementById('letterInput').disabled = false;
+    document.getElementById('letterInput').focus();
+    updateDisplay();
+  }
+
+  function updateDisplay() {
+    const display = currentWord.split('').map(letter =>
+      guessedLetters.includes(letter) ? letter : '_'
+    ).join(' ');
+    document.getElementById('wordDisplay').textContent = display;
+    document.getElementById('chances').textContent = maxWrong - wrongGuesses;
+    document.getElementById('usedLetters').textContent =
+      guessedLetters.length > 0 ? guessedLetters.join(', ') : '-';
+
+    if (!display.includes('_') && !gameOver) {
+      gameOver = true;
+      const msg = document.getElementById('message');
+      msg.className = 'message win';
+      msg.textContent = '🎉 축하합니다! 단어는 "' + currentWord + '" 였습니다.';
+      document.getElementById('letterInput').disabled = true;
+    }
+    if (wrongGuesses >= maxWrong && !gameOver) {
+      gameOver = true;
+      const msg = document.getElementById('message');
+      msg.className = 'message lose';
+      msg.textContent = '😢 게임 오버! 정답은 "' + currentWord + '" 였습니다.';
+      document.getElementById('letterInput').disabled = true;
+    }
+  }
+
+  function guessLetter() {
+    if (gameOver) return;
+    const input = document.getElementById('letterInput');
+    const letter = input.value.toLowerCase().trim();
+    input.value = '';
+    input.focus();
+    if (!letter || !/^[a-z]$/.test(letter)) return;
+    if (guessedLetters.includes(letter)) return;
+    guessedLetters.push(letter);
+    if (!currentWord.includes(letter)) wrongGuesses++;
+    updateDisplay();
+  }
+
+  document.getElementById('letterInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') guessLetter();
+  });
+
+  newGame();
+</script>
+</html>

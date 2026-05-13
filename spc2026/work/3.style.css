@@ -1,0 +1,29 @@
+.calendar {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  border: 1px solid red;
+  border-collapse: collapse;
+  margin: 0 auto;
+  padding: 0;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  font-variant: small-caps;
+}
+.calendar-table {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  border: 1px solid red;
+  border-collapse: collapse;
+}
+.calendar-table th,
+.calendar-table td {
+  border: 1px solid blue;
+}

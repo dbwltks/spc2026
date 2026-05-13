@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      li.checked span {
+        text-decoration: line-through;
+        color: #ccc;
+      }
+      #todoInput {
+        width: 200px;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #f0f0f0;
+      }
+      #addTodo,
+      .deleteButton {
+        padding: 5px 10px;
+        border: none;
+        background-color: #f0f0f0;
+        color: #333;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .deleteButton {
+        margin-left: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>오늘 할일 Todo List</h1>
+    <form onsubmit="addTodoEvent(event)">
+      <input type="text" id="todoInput" placeholder="할일을 입력하세요" />
+      <button id="addTodo" type="submit">추가</button>
+    </form>
+    <ul id="todoList"></ul>
+
+    <script>
+      const todoInput = document.getElementById("todoInput");
+      const todoList = document.getElementById("todoList");
+
+      // ✅ 할일을 객체로 관리 (id, text, done)
+      let todos = [];
+      let nextId = 1;
+
+      function addTodoEvent(event) {
+        event.preventDefault();
+        const text = todoInput.value.trim();
+        if (text === "") return;
+
+        todos.push({ id: nextId++, text, done: false });
+        todoInput.value = "";
+        render();
+      }
+
+      function toggleTodo(id) {
+        const todo = todos.find((t) => t.id === id);
+        todo.done = !todo.done;
+        render();
+      }
+
+      function deleteTodo(id) {
+        todos = todos.filter((t) => t.id !== id);
+        render();
+      }
+
+      // ✅ 렌더 함수가 데이터(todos)만 보고 UI를 알아서 생성
+      function render() {
+        todoList.innerHTML = todos
+          .map(
+            (todo) => `
+              <li class="${todo.done ? "checked" : ""}">
+                <input 
+                  type="checkbox" 
+                  ${todo.done ? "checked" : ""}
+                  onclick="toggleTodo(${todo.id})"
+                />
+                <span>${todo.text}</span>
+                <button class="deleteButton" onclick="deleteTodo(${todo.id})">
+                  삭제
+                </button>
+              </li>
+            `,
+          )
+          .join("");
+        todoInput.focus();
+      }
+    </script>
+  </body>
+</html>
