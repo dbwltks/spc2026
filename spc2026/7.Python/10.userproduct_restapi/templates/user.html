@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="search">
+      <input type="text" name="name" placeholder="Search by name" />
+      <button type="submit">Search</button>
+      <ul id="searchResults"></ul>
+    </form>
+    <script>
+      document.getElementById("search").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const searchTerm =
+          event.target.querySelector("input[name='name']").value;
+        fetch(`/api/user?name=${searchTerm}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          });
+      });
+    </script>
+  </body>
+</html>

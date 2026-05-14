@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>외부 요청 테스트</h1>
+    <input type="number" id="user_id" placeholder="User ID" value="1" />
+    <button onclick="fetchData(user_id.value)">데이터 요청하기</button>
+    <button onclick="createData()">데이터 생성하기</button>
+    <button onclick="deleteData()">데이터 삭제하기</button>
+    <button onclick="updateData()">데이터 수정하기</button>
+
+    <div id="result"></div>
+    <script>
+      /* PUT 정보 수정 */
+      function updateData() {
+        const userId = document.getElementById("user_id").value;
+        const putData = {
+          userId: userId,
+          id: userId,
+          title: "title test update",
+          body: "body test update",
+        };
+        fetch(`https://jsonplaceholder.typicode.com/posts/${userId}`, {
+          method: "PUT",
+          body: JSON.stringify(putData),
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            document.getElementById("result").innerHTML =
+              `<ul><li>id: ${data.id}</li><li>title: ${data.title}</li><li>body: ${data.body}</li></ul>`;
+          })
+          .catch((error) => {
+            console.log("Error:", error);
+            document.getElementById("result").innerHTML = "Error: " + error;
+          });
+      }
+      /* DELETE 정보 삭제 */
+      function deleteData() {
+        fetch(`https://jsonplaceholder.typicode.com/posts/1`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            document.getElementById("result").innerHTML =
+              "Data deleted successfully";
+          })
+          .catch((error) => {
+            console.log("Error:", error);
+            document.getElementById("result").innerHTML = "Error: " + error;
+          });
+      }
+      /* POST 정보 생성 */
+      function createData() {
+        const postData = {
+          uid: 1,
+          title: "title test",
+          body: "body test",
+        };
+        fetch(`https://jsonplaceholder.typicode.com/posts`, {
+          method: "POST",
+          body: JSON.stringify(postData), // 데이터 전송
+          headers: {
+            "Content-Type": "application/json; charset=utf-8", // 데이터 타입 지정
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            document.getElementById("result").innerHTML =
+              "Data created successfully";
+          })
+          .catch((error) => {
+            console.log("Error:", error);
+            document.getElementById("result").innerHTML = "Error: " + error;
+          });
+      }
+
+      /* GET 정보 조회 */
+      const user_id = document.getElementById("user_id");
+      function fetchData(user_id) {
+        fetch(`https://jsonplaceholder.typicode.com/users/${user_id}`)
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            document.getElementById("result").innerHTML =
+              `<ul><li>id: ${data.id}</li><li>name: ${data.name}</li><li>email: ${data.email}</li><li>phone: ${data.phone}</li><li>website: ${data.website}</li><li>company: ${data.company.name}</li><li>address: ${data.address.street}, ${data.address.suite}, ${data.address.city}, ${data.address.zipcode}</li></ul>`;
+          })
+          .catch((error) => {
+            console.log("Error:", error);
+            document.getElementById("result").innerHTML = "Error: " + error;
+          });
+      }
+    </script>
+  </body>
+</html>

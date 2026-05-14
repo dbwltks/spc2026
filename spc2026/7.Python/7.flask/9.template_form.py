@@ -8,7 +8,6 @@ def index():
 
 @app.route("/login", methods=["POST"])
 def login():
-  
   username = request.form["username"]
   password = request.form["password"]
   return render_template("login.html", username=username, password=password)
